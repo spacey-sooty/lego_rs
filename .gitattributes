@@ -1,0 +1,7 @@
+*.rs linguist-detectable
+*.bat linguist-detectable
+*.sh linguist-detectable
+
+*.yml linguist-vendored
+*.toml linguist-vendored
+*.md linguist-vendored
