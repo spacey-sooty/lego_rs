@@ -1,0 +1,14 @@
+[build]
+target = "armv5te-unknown-linux-musleabi"
+
+[target.armv5te-unknown-linux-musleabi]
+linker = "rust-lld"
+
+[profile.release]
+lto = true
+strip = "debuginfo"
+
+[alias]
+b = "build"
+br = "build --release"
+
