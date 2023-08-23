@@ -26,4 +26,3 @@ fn main() -> Ev3Result<()> {
 
     Ok(())
 }
-
