@@ -35,9 +35,13 @@ impl System {}
 pub struct PIDController {
   // mutable (for values that are mutable in PIDConfig type)
   config: PIDConfig,
+  target: f64,
+  dt: f64,
   // immutable
   // the system that is controlled by this PID controller instance
-  system: System
+  system: System,
+  c: f64,
+  finished: bool
 }
 
 impl PIDController {
@@ -46,5 +50,20 @@ impl PIDController {
   fn get_system(&self) -> &System { &self.system }
 
   // closed loop
-  fn closed_loop(&self, dt: f64) -> f64 { return self.config.p + self.config.i / dt + self.config.d * dt; }
+  fn closed_loop_c(&mut self) -> f64 {
+      let x = self.config.p + self.config.i / self.dt + self.config.d * self.dt
+      self.c = x
+      return x; 
+  }
+
+  fn on_update(&mut self) {
+      closed_loop_c(self);
+      if self.config.izone > self.target - self.c {
+          self.config.d -= 0.1;
+      }
+
+      if -self.config.error < self.target - self.c < self.config.error {
+        self.finished = true;
+      }
+  }
 }
