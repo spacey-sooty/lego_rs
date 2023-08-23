@@ -7,8 +7,8 @@ pub struct PIDConfig {
   i: f64,
   d: f64,
   // mutable
-  izone: u16,
-  error: f32
+  izone: f64,
+  error: f64,
 }
 
 impl PIDConfig {
@@ -17,12 +17,12 @@ impl PIDConfig {
   fn get_p(&self) -> f64 { self.p }
   fn get_i(&self) -> f64 { self.i }
   fn get_d(&self) -> f64 { self.d }
-  fn get_izone(&self) -> u16 { self.izone }
-  fn get_error(&self) -> f32 { self.error }
+  fn get_izone(&self) -> f64 { self.izone }
+  fn get_error(&self) -> f64 { self.error }
 
   // setters for mutable values
-  fn set_izone(&mut self, val: u16) { self.izone = val }
-  fn set_error(&mut self, val: f32) { self.error = val }
+  fn set_izone(&mut self, val: f64) { self.izone = val }
+  fn set_error(&mut self, val: f64) { self.error = val }
 }
 
 pub enum System {
@@ -51,18 +51,18 @@ impl PIDController {
 
   // closed loop
   fn closed_loop_c(&mut self) -> f64 {
-      let x = self.config.p + self.config.i / self.dt + self.config.d * self.dt
-      self.c = x
+      let x = self.config.p + self.config.i / self.dt + self.config.d * self.dt;
+      self.c = x;
       return x; 
   }
 
   fn on_update(&mut self) {
-      closed_loop_c(self);
+      self.closed_loop_c();
       if self.config.izone > self.target - self.c {
           self.config.d -= 0.1;
       }
 
-      if -self.config.error < self.target - self.c < self.config.error {
+      if (-self.config.error < self.target - self.c && self.target - self.c < self.config.error) {
         self.finished = true;
       }
   }
