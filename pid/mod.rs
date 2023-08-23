@@ -35,8 +35,8 @@ impl System {}
 pub struct PIDController {
   // mutable (for values that are mutable in PIDConfig type)
   config: PIDConfig,
-  // the system that is controlled by this PID controller instance
   // immutable
+  // the system that is controlled by this PID controller instance
   system: System
 }
 
@@ -44,4 +44,7 @@ impl PIDController {
   // getters
   fn get_config(&self) -> &PIDConfig { &self.config }
   fn get_system(&self) -> &System { &self.system }
+
+  // closed loop
+  fn closed_loop(&self, dt: f64) -> f64 { return self.config.p + self.config.i / dt + self.config.d * dt; }
 }
