@@ -1,4 +1,4 @@
-![Status Badge](github.com/KSHS-Robotics-Club/2023_FLL/2023_FLL/actions/workflows/build.yml/badge.svg)
+![Status Badge](github.com/KSHS-Robotics-Club/2023_FLL/actions/workflows/build.yml/badge.svg)
 
 # lego_rs
 
