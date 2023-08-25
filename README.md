@@ -1,4 +1,4 @@
-![Status Badge](https://github.com/spacey-sooty/lego_rs/actions/workflows/build.yml/badge.svg)
+![Status Badge](https://github.com/KSHS-Robotics-Club/lego_rs/actions/workflows/build.yml/badge.svg)
 
 # lego_rs
 
