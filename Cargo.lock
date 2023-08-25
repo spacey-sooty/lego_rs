@@ -7,6 +7,7 @@ name = "ev3_rs"
 version = "0.1.0"
 dependencies = [
  "ev3dev-lang-rust",
+ "lib",
 ]
 
 [[package]]
@@ -28,6 +29,13 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "lib"
+version = "0.1.0"
+dependencies = [
+ "ev3dev-lang-rust",
 ]
 
 [[package]]

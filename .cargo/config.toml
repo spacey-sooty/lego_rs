@@ -12,3 +12,6 @@ strip = "debuginfo"
 b = "build"
 br = "build --release"
 
+bl = "build --package lib"
+blr = "build --release --package lib"
+
