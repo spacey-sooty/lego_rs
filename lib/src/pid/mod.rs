@@ -2,13 +2,13 @@ use ev3dev_lang_rust::motors::{LargeMotor, MediumMotor};
 
 pub struct PIDConfig {
   // immutable
-  path: String,
-  p: f32,
-  i: f32,
-  d: f32,
+  pub path: String,
+  pub p: f32,
+  pub i: f32,
+  pub d: f32,
   // mutable
-  izone: f32,
-  error: f32,
+  pub izone: f32,
+  pub error: f32,
 }
 
 impl PIDConfig {
@@ -45,14 +45,14 @@ impl System {}
 
 pub struct PIDController {
   // mutable (for values that are mutable in PIDConfig type)
-  config: PIDConfig,
-  target: f32,
-  dt: f32,
+  pub config: PIDConfig,
+  pub target: f32,
+  pub dt: f32,
   // immutable
   // the system that is controlled by this PID controller instance
-  system: System,
-  c: f32,
-  finished: bool
+  pub system: System,
+  pub c: f32,
+  pub finished: bool
 }
 
 impl PIDController {
