@@ -1,4 +1,5 @@
 use ev3dev_lang_rust::motors::{LargeMotor, MediumMotor};
+use ev3dev_lang_rust::Ev3Result;
 
 pub struct PIDConfig {
   // immutable
@@ -65,12 +66,10 @@ impl PIDController {
       self.c = self.config.p + self.config.i / self.dt + self.config.d * self.dt;
   }
 
-  pub fn on_update(&mut self) {
+  pub fn on_update(&mut self) -> Ev3Result<()> {
       self.closed_loop_c();
-      match &self.system {
-          System::LargeMotor(motor) => motor.set_duty_cycle_sp(50 + self.config.d as i32).unwrap(),
-          System::MediumMotor(motor) => motor.set_duty_cycle_sp(50 + self.config.d as i32).unwrap(),
-      };
+
+
       if self.config.izone > self.target - self.c {
           self.config.d -= 0.35;
       };
@@ -78,17 +77,25 @@ impl PIDController {
       if -self.config.error < self.target - self.c && self.target - self.c < self.config.error {
         self.finished = true;
       };
+
       match &self.finished {
         true => match &self.system {
-            System::LargeMotor(motor) => motor.run_direct().unwrap(),
-            System::MediumMotor(motor) => motor.run_direct().unwrap(),
+            System::LargeMotor(motor) => { 
+                motor.set_duty_cycle_sp(50 + self.config.d as i32)?;
+                motor.run_direct()?;
+            },
+            System::MediumMotor(motor) => {
+                motor.run_direct()?;
+                motor.set_duty_cycle_sp(50 + self.config.d as i32)?;
+            },
         },
         false => match &self.system {
-            System::LargeMotor(motor) => motor.stop().unwrap(),
-            System::MediumMotor(motor) => motor.stop().unwrap(),
+            System::LargeMotor(motor) => motor.stop()?,
+            System::MediumMotor(motor) => motor.stop()?,
         },
       };
 
+      Ok(())
   }
 
   pub fn from(config: PIDConfig, target: f32, dt: f32, system: System, c: f32) -> PIDController {

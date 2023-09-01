@@ -1,18 +1,14 @@
 extern crate ev3dev_lang_rust;
+extern crate lib;
 
 use ev3dev_lang_rust::Ev3Result;
 use ev3dev_lang_rust::motors::{LargeMotor, MotorPort};
 
+use lib::pid;
+
 fn main() -> Ev3Result<()> {
-
-    // Get large motor on port outA.
-    let large_motor = LargeMotor::get(MotorPort::OutA)?;
-
-    // Set command "run-direct".
-    large_motor.run_direct()?;
-
-    // Run motor.
-    large_motor.set_duty_cycle_sp(50)?;
-
-    Ok(())
+    let conf = pid::PIDConfig::from(String::from("/elevator"),  1.0, 2.0, 3.0, 1.0, 1.0);
+    let mut controller = pid::PIDController::from(conf, 90.0, 1.0, pid::System::LargeMotor(LargeMotor::get(MotorPort::OutA).unwrap()), 0.0);
+    Ok(controller.on_update()?)
 }
+
