@@ -78,7 +78,7 @@ impl PIDController {
         self.finished = true;
       };
 
-      match &self.finished {
+      Ok(match &self.finished {
         true => match &self.system {
             System::LargeMotor(motor) => { 
                 motor.set_duty_cycle_sp(50 + self.config.d as i32)?;
@@ -93,9 +93,7 @@ impl PIDController {
             System::LargeMotor(motor) => motor.stop()?,
             System::MediumMotor(motor) => motor.stop()?,
         },
-      };
-
-      Ok(())
+      })
   }
 
   pub fn from(config: PIDConfig, target: f32, dt: f32, system: System, c: f32) -> PIDController {
