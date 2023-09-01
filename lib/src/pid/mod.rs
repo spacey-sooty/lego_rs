@@ -73,11 +73,22 @@ impl PIDController {
       };
       if self.config.izone > self.target - self.c {
           self.config.d -= 0.35;
-      }
+      };
 
       if -self.config.error < self.target - self.c && self.target - self.c < self.config.error {
         self.finished = true;
-      }
+      };
+      match &self.finished {
+        true => match &self.system {
+            System::LargeMotor(motor) => motor.run_direct().unwrap(),
+            System::MediumMotor(motor) => motor.run_direct().unwrap(),
+        },
+        false => match &self.system {
+            System::LargeMotor(motor) => motor.stop().unwrap(),
+            System::MediumMotor(motor) => motor.stop().unwrap(),
+        },
+      };
+
   }
 
   pub fn from(config: PIDConfig, target: f32, dt: f32, system: System, c: f32) -> PIDController {
