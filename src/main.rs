@@ -1,7 +1,6 @@
 extern crate ev3dev_lang_rust;
 extern crate lib;
 
-use ev3dev_lang_rust::Ev3Result;
 use ev3dev_lang_rust::motors::{LargeMotor, MotorPort};
 
 use lib::pid;
@@ -11,4 +10,3 @@ fn main() -> Ev3Result<()> {
     let mut controller = pid::PIDController::from(conf, 90.0, 1.0, pid::System::LargeMotor(LargeMotor::get(MotorPort::OutA).unwrap()), 0.0);
     Ok(controller.on_update()?)
 }
-
