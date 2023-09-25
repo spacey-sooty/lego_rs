@@ -1,11 +1,10 @@
 extern crate ev3dev_lang_rust;
 
-use ev3dev_lang_rust::Ev3Result;
 use ev3dev_lang_rust::motors::{LargeMotor, MotorPort};
 use ev3dev_lang_rust::sensors::ColorSensor;
+use ev3dev_lang_rust::Ev3Result;
 
 fn main() -> Ev3Result<()> {
-
     // Get large motor on port outA.
     let large_motor = LargeMotor::get(MotorPort::OutA)?;
 
@@ -26,4 +25,3 @@ fn main() -> Ev3Result<()> {
 
     Ok(())
 }
-
