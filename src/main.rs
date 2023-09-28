@@ -2,6 +2,7 @@ extern crate ev3dev_lang_rust;
 extern crate lib;
 
 use ev3dev_lang_rust::motors::{LargeMotor, MotorPort};
+use ev3dev_lang_rust::Ev3Result;
 
 use lib::pid;
 
