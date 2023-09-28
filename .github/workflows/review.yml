@@ -4,6 +4,7 @@ name: Rustfmt Review
 
 jobs:
   format:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
